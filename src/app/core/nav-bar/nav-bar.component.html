@@ -1,0 +1,18 @@
+<nav class="nav-bar" *ngIf="visibilityService.isVisible$ | async" >
+  <div class="container">
+    <div class="grid">
+        <div class="col-12">
+          <a (click)="exibindoMenu = !exibindoMenu" ><i class="pi pi-bars navbar-toggle"></i></a>
+        </div>
+    </div>
+  </div>
+
+  <ul class="navbar-menu" [hidden]="!exibindoMenu">
+    <li class="navbar-usuario"  >{{ userName}}</li>
+    <li class="navbar-menuitem"><a href="http://localhost:4200/cards">Cartão Service</a></li>
+    <li class="navbar-menuitem"><a href="http://localhost:4200/clients">Cliente Service</a></li>
+    <li class="navbar-menuitem"><a href="http://localhost:4200/aval">Avaliador de Crédito</a></li>
+    <li class="navbar-menuitem"><button (click)="logout()" class="button-as-text" >Logout</button></li>
+  </ul>
+
+</nav>

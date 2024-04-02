@@ -1,0 +1,31 @@
+<div class="containerLogin" >
+  <video onloadedmetadata="this.muted=true" autoplay loop  preload="auto"  controls >
+    <source src="../../../assets/images/fundo.mp4" type="video/mp4">
+  </video>
+
+  <form #loginForm="ngForm" style="  padding: 30px;" >
+    <div class="grid">
+
+    <div class="formulario">
+      <div class="col-12">
+        <h2  >Entre para continuar</h2>
+       </div>
+
+        <div class="col-12">
+          <label>Login</label>
+          <input type="text" pInputText name="username" ngModel #username="ngModel">
+        </div>
+
+        <div class="col-12" >
+          <label>Senha</label>
+          <input type="password" pInputText name="password" ngModel #password="ngModel">
+        </div>
+
+        <div class="col-12" >
+          <button pButton (click)="login(loginForm)" type="submit" >Entrar</button>
+        </div>
+
+    </div>
+  </div>
+  </form>
+</div>

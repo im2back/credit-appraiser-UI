@@ -1,0 +1,170 @@
+<div class="container">
+
+  <div class="col-12" *ngIf="message">
+    <div class="success-message">
+      {{message}}
+    </div>
+  </div>
+
+  <form #formAvaliadorCredito="ngForm" >
+    <div class="grid" style="background-color: #87cfebc7; margin-top: 20px;" >
+
+      <div class="col-12"  >
+        <h1>Avaliador de Crédito </h1>
+      </div>
+
+      <div class="col-12 md:col-6">
+        <label>CPF</label>
+        <p-inputMask mask="999.999.999-99" styleClass="w-full" class="w-full" name="cpf" ngModel #cpfAvaliador="ngModel" [required]="true" ></p-inputMask>
+        <app-valid-messages [controlForm]="cpfAvaliador" text="Campo obrigatório" error="required"> </app-valid-messages>
+      </div>
+
+      <div class="col-12 md:col-6">
+        <label>Renda</label>
+        <p-inputNumber inputId="integeronly" name="income" ngModel #income="ngModel" [required]="true"  styleClass="w-full" class="w-full" inputId="currency-br" mode="currency" currency="BRL" locale="pt-BR" > </p-inputNumber>
+        <app-valid-messages [controlForm]="income" error="required" text="Campo obrigatório" ></app-valid-messages>
+      </div>
+
+      <div class="col-12"  >
+        <button pButton [disabled]="!formAvaliadorCredito.valid" (click)="avaliarCredito(formAvaliadorCredito)" type="submit" label="Avaliar"></button>
+      </div>
+
+    </div>
+  </form>
+
+  <div class="grid" style="background-color: #87cfebc7; margin-top: 0px; " >
+
+    <div class="col-12" style="display: flex; justify-content: center;" >
+      <h2> Cartões Aprovados</h2>
+    </div>
+
+    <div class="col-12" >
+      <table class="custom-prime-table">
+        <thead >
+          <tr>
+            <th>Id do cartão  </th>
+            <th>Nome do cartão</th>
+            <th>Bandeira do cartão</th>
+            <th>Limite Aprovado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let element of cards" >
+            <td>{{ element.id  }}</td>
+            <td>{{ element.card }}</td>
+            <td>{{ element.flag }}</td>
+            <td>{{ element.limitApproved }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <form *ngIf="hasRole('ADMIN_READ')" #formSolicitarCartao="ngForm" >
+    <div style="margin-top: 30px; background-color: aqua; border-radius: 5px;" class="grid">
+      <div class="col-12" >
+        <h1>Solicitar Cartão</h1>
+      </div>
+
+      <div class="col-12 md:col-6" >
+        <label>ID do cartão</label>
+        <p-inputNumber name="idCard" ngModel #idCard="ngModel" styleClass="w-full" class="w-full" mode="decimal" inputId="withoutgrouping" [useGrouping]="false" [required]="true" > </p-inputNumber>
+        <app-valid-messages [controlForm]="idCard" text="Campo obrigatório" error="required" ></app-valid-messages>
+      </div>
+
+      <div class="col-12 md:col-6">
+        <label>CPF</label>
+        <p-inputMask mask="999.999.999-99" styleClass="w-full" class="w-full" name="cpf" ngModel #cpfSolicitar="ngModel" [required]="true" ></p-inputMask>
+        <app-valid-messages [controlForm]="cpfSolicitar" text="Campo obrigatório" error="required"  ></app-valid-messages>
+      </div>
+
+      <div class="col-12 md:col-6">
+        <label>Limite Aprovado</label>
+        <p-inputNumber inputId="integeronly" name="limitApproved" ngModel #limitApprovedSolicitar="ngModel" [required]="true"  styleClass="w-full" class="w-full" inputId="currency-br" mode="currency" currency="BRL" locale="pt-BR" > </p-inputNumber>
+        <app-valid-messages [controlForm]="limitApprovedSolicitar" text="Campo obrigatório" error="required" ></app-valid-messages>
+      </div>
+
+      <div class="col-12 md:col-6" >
+        <label>Endereço</label>
+        <input style="width: 100%;" pInputText type="text" name="address" ngModel #address="ngModel">
+        <app-valid-messages [controlForm]="address" text="Campo obrigatório" error="required" ></app-valid-messages>
+      </div>
+
+      <div class="col-12"  >
+        <button pButton [disabled]="!formSolicitarCartao.valid" (click)="solicitarCartao(formSolicitarCartao)" type="submit" label="Solicitar"></button>
+      </div>
+
+      <div class="col-12" >
+        <label style="text-align: center; color: green;" >Número do protocolo de acompanhamento</label>
+        <input style="width: 100%;" pInputText  [value]="protocolString" type="text">
+      </div>
+
+    </div>
+  </form>
+
+  <div class="grid" style="margin-top: 30px; background-color:#b6d0e2c3; border-radius: 5px;" >
+    <div class="col-12" >
+      <h1>Detalhar situação do cliente</h1>
+    </div>
+
+    <div class="col-12 md:col-3">
+      <label>CPF</label>
+      <p-inputMask mask="999.999.999-99" styleClass="w-full" class="w-full" name="cpf" ngModel #cpfDetalhar="ngModel" [required]="true" ></p-inputMask>
+      <app-valid-messages [controlForm]="cpfDetalhar" text="Campo obrigatório" error="required" ></app-valid-messages>
+    </div>
+
+    <div class="col-12"  >
+      <button pButton [disabled]="!cpfDetalhar.valid" (click)="detalharSituacao(cpfDetalhar.value)" type="submit" label="Detalhar"></button>
+    </div>
+
+    <div style="display: flex; justify-content: center;" class="col-12" >
+      <h2>Cliente</h2>
+    </div>
+
+    <div class="col-12"  >
+      <table class="custom-prime-table">
+        <thead >
+          <tr>
+            <th>Id do cliente</th>
+            <th>Nome do cliente</th>
+            <th>Idade</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ clientSituationClient.id  }}</td>
+            <td>{{ clientSituationClient.name }}</td>
+            <td>{{ clientSituationClient.age }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="display: flex; justify-content: center;" class="col-12" >
+      <h2>Cartões associados</h2>
+    </div>
+
+    <div class="col-12" >
+      <table class="custom-prime-table">
+        <thead >
+          <tr>
+            <th>Nome do cartão</th>
+            <th>Bandeira do cartão</th>
+            <th>Limite Aprovado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let element of cardsSituation" >
+            <td>{{ element.cardName }}</td>
+            <td>{{ element.cardFlag}}</td>
+            <td>{{ element.limitApproved }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+  </div>
+
+</div>

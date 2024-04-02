@@ -1,0 +1,78 @@
+<div class="container">
+  <form *ngIf="hasRole('ADMIN_READ')" #cardForm="ngForm" >
+    <div class="grid">
+
+      <div class="col-12" >
+        <h1>Cadastrar cartões</h1>
+      </div>
+
+      <div class="col-12 md:col-6" >
+        <label>Nome do cartão</label>
+        <input pInputText type="text" name="cardName" ngModel #cardName="ngModel" required>
+        <app-valid-messages [controlForm]="cardName" error="required" text="Informe o nome do cartão"> </app-valid-messages>
+      </div>
+
+      <div class="col-12 md:col-6 ">
+        <label>Bandeira do cartão</label>
+        <p-dropdown [options]="flags" [(ngModel)]="selectedFlagCode"  [showClear]="true" placeholder="Selecione a bandeira"  [required]="true" name="cardFlag" ngModel #cardFlag="ngModel" [style]="{'width':'100%'}" ></p-dropdown>
+        <app-valid-messages [controlForm]="cardFlag" text="Informe a bandeira do cartão" error="required" > </app-valid-messages>
+      </div>
+
+      <div class="col-12 md:col-6" >
+        <label>Renda</label>
+        <p-inputNumber inputId="integeronly" name="income" ngModel #income="ngModel" [required]="true"  styleClass="w-full" class="w-full" inputId="currency-br" mode="currency" currency="BRL" locale="pt-BR" > </p-inputNumber>
+        <app-valid-messages [controlForm]="income" text=" Informe a renda" error="required" > </app-valid-messages>
+      </div>
+
+      <div class="col-12 md:col-6 ">
+        <label>Limite Basico</label>
+        <p-inputNumber inputId="integeronly" name="basicLimit" ngModel #basicLimit="ngModel" [required]="true"  styleClass="w-full" class="w-full" inputId="currency-br" mode="currency" currency="BRL" locale="pt-BR"   ></p-inputNumber>
+        <app-valid-messages [controlForm]="basicLimit" text="Informe o limite basico" error="required" > </app-valid-messages>
+      </div>
+
+      <div class="col-12" >
+        <button (click)="cadastrarCartao(cardForm)" type="submit" [disabled]="!cardForm.valid" pButton label="Cadastrar" ></button>
+      </div>
+    </div>
+  </form>
+
+  <div class="grid">
+    <div class="col-12" >
+      <h2>Localizar cartões associados</h2>
+    </div>
+
+    <div class="col-12 md:col-3" >
+      <label>CPF</label>
+      <p-inputMask mask="999.999.999-99" styleClass="w-full" class="w-full" name="cpfBusca" ngModel #cpfBusca="ngModel" [required]="true" ></p-inputMask>
+      <app-valid-messages [controlForm]="cpfBusca" text="Campo obrigatório" error="required"  ></app-valid-messages>
+    </div>
+
+    <div class="col-12" >
+      <table class="custom-prime-table">
+        <thead >
+          <tr>
+            <th>Nome do cartão</th>
+            <th>Bandeira</th>
+            <th>CPF</th>
+            <th>Limite Aprovado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let element of clientCard" >
+            <td>{{ element.cardName  }}</td>
+            <td>{{ element.cardFlag }}</td>
+            <td>{{ element.cpf }}</td>
+            <td>{{ element.limitApproved }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col-12" >
+      <button (click)="buscarCartoes(cpfBusca.value)" type="submit" [disabled]="!cpfBusca.valid" pButton label="Localizar" ></button>
+    </div>
+  </div>
+
+
+
+</div>

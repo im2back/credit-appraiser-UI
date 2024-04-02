@@ -1,0 +1,77 @@
+<div class="container">
+  <form #usuarioForm="ngForm" (ngSubmit)="cadastrar(usuarioForm)" >
+    <div class="grid">
+
+      <div class="col-12" *ngIf="message">
+        <div class="success-message">
+          {{message}}
+        </div>
+      </div>
+
+      <div class="col-12" >
+        <h1>Cadastro de cliente</h1>
+      </div>
+
+      <div class="col-12">
+        <label>Nome</label>
+        <input pInputText style="width: 100%;" type="text" name="name" required ngModel #name="ngModel">
+        <app-valid-messages [controlForm]="name" text="Campo obrigatorio" error="required" ></app-valid-messages>
+      </div>
+
+      <div class="col-12 md:col-6">
+        <label>CPF</label>
+        <p-inputMask mask="999.999.999-99"  [required]="true" [style]="{'width':'100%'}" name="cpf" ngModel #cpf="ngModel"  ></p-inputMask>
+        <app-valid-messages [controlForm]="cpf" text="Campo obrigatorio" error="required" ></app-valid-messages>
+      </div>
+
+      <div class="col-12 md:col-6" >
+        <label>Idade</label>
+        <input pInputText style="width: 100%;" type="text" name="age" required ngModel #age="ngModel">
+        <app-valid-messages [controlForm]="age" text="Campo obrigatorio" error="required" ></app-valid-messages>
+      </div>
+
+      <div class="col-12" >
+        <button pButton [disabled]="!usuarioForm.valid" type="submit" label="Cadastrar"></button>
+      </div>
+
+    </div>
+  </form>
+
+  <div *ngIf="hasRole('ADMIN_READ')"  style="margin-top: 40px;" class="grid">
+
+    <div class="col-12 md:col-3">
+      <label>Localizar cliente por CPF</label>
+      <p-inputMask mask="999.999.999-99" [required]="true" [style]="{'width':'100%'}" ngModel #cpfBusca="ngModel" ></p-inputMask>
+      <app-valid-messages [controlForm]="cpfBusca" text="Campo obrigatorio" error="required" ></app-valid-messages>
+    </div>
+
+    <div class="col-12" >
+      <button (click)="listarCliente(cpfBusca.value)" [disabled]="!cpfBusca.valid"  pButton type="button" >Buscar</button>
+    </div>
+
+    <div class="col-12">
+
+      <table  class="custom-prime-table">
+        <thead >
+          <tr>
+            <th>Id</th>
+            <th>cpf</th>
+            <th>nome</th>
+            <th>idade</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{ cliente?.id  }}</td>
+            <td>{{ cliente?.cpf }}</td>
+            <td>{{ cliente?.name }}</td>
+            <td>{{ cliente?.age }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+
+</div>
+

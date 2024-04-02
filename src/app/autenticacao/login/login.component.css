@@ -1,0 +1,76 @@
+
+.containerLogin {
+  position: relative; /* Adicione isto */
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden; /* Para garantir que o vídeo não saia fora dos limites do contêiner */
+}
+
+.containerLogin video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: -1; /* Para garantir que o vídeo fique atrás do conteúdo */
+  transform: translate(-50%, -50%); /* Centraliza o vídeo */
+  object-fit: cover; /* Garante que o vídeo cubra todo o espaço disponível */
+}
+
+.formulario{
+  border-radius: 10px;
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.3);
+  padding: 30px;
+
+}
+
+@keyframes colorPulse {
+  0% {
+    color: aqua;
+    transform: scale(1);
+  }
+  50% {
+    color: #228291; /* Muda para uma cor diferente no meio da animação */
+    transform: scale(1.1); /* Aumenta o tamanho em 10% */
+  }
+  100% {
+    color: aqua;
+    transform: scale(1);
+  }
+}
+
+h2 {
+  color: aqua; /* Cor inicial */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  animation: colorPulse 3s infinite; /* Aplica a animação, duração de 3 segundos, repete infinitamente */
+}
+
+input{
+  background-color: transparent;
+  color: black;
+}
+
+
+
+label{
+  color: aqua;
+}
+
+button{
+  font-family: 'Montserrat', sans-serif;
+  font-size: medium;
+  background-color: rgba(69, 120, 69, 0.652);
+  border-color: transparent;
+  letter-spacing: 1px;
+
+}
+
